@@ -23,16 +23,17 @@ public class Main {
         //This method of reading a file is old, needs to be updated. 
         double[][] rawData = DataFileReader.ReadCSVFile(new File(TEST_FILE));
         
-        //Actual use of kmeans strategy pattern
+        //Demonstrates use of naive k-means strategy pattern
         ClusterContext cContext = new ClusterContext();
         cContext.setClusterStrategy(new KmeansNaiveStrategy());
-        List<double[]> centroids = cContext.getCentroids(rawData, NUM_CLUSTERS);
+        List<double[]> centroids = cContext.findCentroids(rawData, NUM_CLUSTERS);
         
-        //Print output for validation
-        System.out.println("Cluster Centroids:%n-------------------");
+        //Print output from naive k-means clustering
+        System.out.format("%n%nMain.java: Cluster Centroids...%n-------------------------------%n");
         centroids.forEach(centroid -> {
             System.out.format("Centroid: %s%n", Arrays.toString(centroid));
         });
+        System.out.format("%n%n");
     }
     
 }

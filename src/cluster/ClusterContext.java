@@ -15,7 +15,7 @@ public class ClusterContext {
     }
     
     //The output of all clustering algorithms will be only the final centroids.
-    public List<double[]> getCentroids(double[][] data, int clusters) {
-        return strategy.cluster(data, clusters);
+    public List<double[]> findCentroids(double[][] data, int clusters) {
+        return strategy.findCentroids(data, clusters);
     }
 }

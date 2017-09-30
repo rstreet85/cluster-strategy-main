@@ -8,5 +8,5 @@ import java.util.List;
  * @author Robert Streetman
  */
 public interface ClusterStrategy {
-    public List<double[]> cluster(double[][] data, int clusters);
+    public List<double[]> findCentroids(double[][] data, int clusters);
 }
