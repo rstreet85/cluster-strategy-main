@@ -18,18 +18,30 @@
 package distances;
 
 /**
- * Distance Strategy interface for distance measuring algorithms.
+ * Context for accessing edit distance algorithms with an EditDistanceStrategy.
  *
  * @author Robert Streetman
  */
-public interface DistanceStrategy {
+public class EditDistanceContext {
+    private EditDistanceStrategy editStrategy;
+    
     /**
-     * Standard interface to find distance between two points.
+     * Method to set edit distance measure strategy to use.
      * 
-     * @param pointA    Endpoint A
-     * @param pointB    Endpoint B
-     * @return double   Distance between endpoint A and endpoint B.
+     * @param strat The desired edit distance measure strategy.
      */
-    //TODO: Throw exception for unequal/invalid coordinates.
-    public double distance(double[] pointA, double[] pointB);    
+    public void setDistanceStrategy(EditDistanceStrategy strat) {
+        editStrategy = strat;
+    }
+    
+    /**
+     * Method to find edit distance between two points with previously-specified strategy.
+     * 
+     * @param strA  String A
+     * @param strB  String B
+     * @return int  Distance between string A and string B.
+     */
+    public int getDistance(String strA, String strB) {
+        return editStrategy.distance(strA, strB);
+    }
 }

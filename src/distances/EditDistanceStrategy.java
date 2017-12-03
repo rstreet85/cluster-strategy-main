@@ -18,18 +18,18 @@
 package distances;
 
 /**
- * Distance Strategy interface for distance measuring algorithms.
+ * Distance Strategy interface for algorithms measuring edit distance.
  *
  * @author Robert Streetman
  */
-public interface DistanceStrategy {
+public interface EditDistanceStrategy {
     /**
-     * Standard interface to find distance between two points.
+     * Standard interface to find distance between two strings.
      * 
-     * @param pointA    Endpoint A
-     * @param pointB    Endpoint B
-     * @return double   Distance between endpoint A and endpoint B.
+     * @param strA    String A
+     * @param strB    String B
+     * @return double Distance between endpoint A and endpoint B.
      */
-    //TODO: Throw exception for unequal/invalid coordinates.
-    public double distance(double[] pointA, double[] pointB);    
+    //TODO: Throw exception for unequal/invalid strings.
+    public int distance(String strA, String strB); 
 }
