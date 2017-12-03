@@ -26,7 +26,7 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
 /**
- * This class holds methods for returning an array of data values from CSV/TSV files using Apache Commons library.
+ * Static class for returning an array of data values from CSV/TSV files using Apache Commons library.
  * 
  * @author Robert Streetman
  */
@@ -38,23 +38,25 @@ public class DataFileReader {
      * @param dataFile, CSV file containing only numeric data to be clustered.
      * @return Array of values expressed as double values.
      */
+    //TODO: Use try-with resources on the file reader.
     public static double[][] ReadCSVFile(File dataFile) {
-        double[][] data = null; //Check for null response, to make sure everything went ok.
+        double[][] data = null;                 //Code calling this method should check for null, signifying error.
         FileReader reader = null;
         CSVParser parser = null;
         CSVFormat format = CSVFormat.DEFAULT;
         
         try {
             reader = new FileReader(dataFile);
-            parser = new CSVParser(reader, format);
-            
+            parser = new CSVParser(reader, format);            
             List records = parser.getRecords();
+            
+            //Read first record to find number of dimensions.
             CSVRecord firstRecord = (CSVRecord) records.get(0);
             int numRecords = records.size();    //Assuming each line is a data point
             int numDimen = firstRecord.size();  //Assuming all data points have equal dimensionality
-            
             data = new double[numRecords][numDimen];
             
+            //Read each row as an n-dimensional data point
             for (int i = 0; i < numRecords; i++) {
                 CSVRecord thisRecord = (CSVRecord) records.get(i);
                 
@@ -63,13 +65,13 @@ public class DataFileReader {
                 }
             }
         } catch (IOException ex) {
-            System.out.println("Error reading data file: " + ex.getMessage() + "...");
+            System.out.format("Error reading data file: %s...%n", ex.getMessage());
         } finally {
             if (reader != null) {
                 try {
                     reader.close();
                 } catch (IOException ex) {
-                    System.out.println("Error closing file reader: " + ex.getMessage() + "...");
+                    System.out.format("Error closing data file reader: %s...%n", ex.getMessage());
                 }
             }
             
@@ -77,7 +79,7 @@ public class DataFileReader {
                 try {
                     parser.close();
                 } catch (IOException ex) {
-                    System.out.println("Error closing CSV parser: " + ex.getMessage() + "...");
+                    System.out.format("Error closing CSV parser: %s...%n", ex.getMessage());
                 }
             }
         }

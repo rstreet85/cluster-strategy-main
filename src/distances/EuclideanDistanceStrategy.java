@@ -18,12 +18,19 @@
 package distances;
 
 /**
- * Euclidean distance strategy.
- *
+ * Strategy for <a href="https://en.wikipedia.org/wiki/Euclidean_distance">Euclidean Distance</a>.
+ * 
  * @author Robert Streetman
  */
 public class EuclideanDistanceStrategy implements DistanceStrategy {
     
+    /**
+     * This method calculates the Euclidean distance between two points of equal dimensionality.
+     * 
+     * @param pointA    Endpoint A
+     * @param pointB    Endpoint B
+     * @return double   Euclidean distance between endpoint A and endpoint B.
+     */
     @Override
     public double distance(double[] pointA, double[] pointB) {
         double sumSquared = 0;

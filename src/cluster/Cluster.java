@@ -14,29 +14,30 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- */package cluster;
+ */
+package cluster;
 
 import java.util.ArrayList;
-//Imports used only for testing
+//Imports used only for internally calculating SSE
 import distances.*;
 
 /**
- * This class holds representation of a data cluster.
+ * Class to represent a single partitional data cluster object and its methods.
  * 
  * @author Robert Streetman
  */
 public class Cluster {
-    private final int dimensions;
+    private final int dimensions;       //Number of dimensions in each data point.
     
-    private ArrayList<double[]> points;
-    private double[] centroid;
-    //Variables used for testing only
-    private DistanceContext distContext;
+    private ArrayList<double[]> points; //Temporary list of data points associated with this centroid.
+    private double[] centroid;          //Coordinates of this cluster's centroid.
+    //Variables used only for internally calculating SSE
+    private DistanceContext distContext;//Used to interact with Distance Starteg pattern.
     
     /**
-     * Cluster instantiation: Centroid must be determined in advance.
+     * Method to instantiate the Cluster object.
      * 
-     * @param c A double array representing the coordinates of the cluster centroid (average). 
+     * @param c A double array representing the coordinates of the cluster centroid (prototype). 
      */
     public Cluster(double[] c) {
         dimensions = c.length;
@@ -75,10 +76,10 @@ public class Cluster {
     }
     
     /**
-     * Returns the sum of squared errors: The lower this value, the more compact the cluster; This value
-     * should decrease as clustering progresses, until reaching a local min.
+     * Returns the sum of squared errors: The lower this value, the more compact the cluster. The sum
+     * of all clusters' SSE should decrease after each iteration, until reaching a local min.
      * 
-     * @return The sum of the squared distance from each point to the centroid.
+     * @return double The sum of the squared distance from each point to the centroid.
      */
     public double SumSquareError() {
         double sse = 0.;
@@ -92,7 +93,7 @@ public class Cluster {
     }
     
     /**
-     * Clears points in the cluster before each iteration.
+     * Clears points associated with this centroid before each iteration.
      */
     public void ClearPoints() {
         points = new ArrayList();

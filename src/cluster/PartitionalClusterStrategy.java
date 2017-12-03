@@ -20,10 +20,17 @@ package cluster;
 import java.util.List;
 
 /**
- * Cluster Strategy interface.
+ * Cluster Strategy interface for partitional clustering algorithms.
  *
  * @author Robert Streetman
  */
-public interface ClusterStrategy {
+public interface PartitionalClusterStrategy {
+    /**
+     * The standard method of clustering a data array with a partitional clustering strategy.
+     * 
+     * @param data      Array of numeric data to be clustered.
+     * @param clusters  Number of labels in data set.
+     * @return List<double[]> List of centroids after clustering.
+     */
     public List<double[]> findCentroids(double[][] data, int clusters);
 }

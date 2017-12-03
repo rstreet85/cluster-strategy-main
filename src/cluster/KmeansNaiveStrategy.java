@@ -24,12 +24,14 @@ import java.util.Random;
 import distances.*;
 
 /**
- * Strategy for naive k-means clustering. The naive version picks seeds at random.
+ * Strategy for naive <a href="https://en.wikipedia.org/wiki/K-means_clustering">k-means clustering</a>.
+ * K-means is a partitional clustering algorithm based on finding prototypes of each label. The naive version
+ * picks centroid seeds at random from the data set.
  *
  * @author Robert Streetman
  */
-public class KmeansNaiveStrategy implements ClusterStrategy {
-    private final int DEF_ITERATIONS = 10;
+public class KmeansNaiveStrategy implements PartitionalClusterStrategy {
+    private final int DEF_ITERATIONS = 10;  //It's rare that reaching a local minimum takes more than 5-10 iterations.
     
     private DistanceContext distContext;    //Access distance measures with Startegy patterns
     private List<double[]> centroids;       //Return values
@@ -37,8 +39,14 @@ public class KmeansNaiveStrategy implements ClusterStrategy {
     private double[][] data;                //Input data values
     private int numClusters;                //Number of clusters into which data is sorted
     
+    /**
+     * @param data          Array of numeric data to be clustered.
+     * @param n_clusters    Number of labels in data set.
+     * @return List<double[]> List of centroids after clustering
+     */
+    //TODO: Allow users to pass in desired number of iterations, though 5-7 are usually sufficient...
+    //TODO: Allow users to pass in desired distance strategy. Using Euclidean for now.
     @Override
-    //TODO: allow users to pass in desired number of iterations, though 5-7 are usually sufficient...
     public List<double[]> findCentroids(double[][] data, int n_clusters) {
         //TODO:For tracing only, comment out when done testing...
         System.out.format("%nBeginning k-means clustering...%n");
@@ -69,7 +77,7 @@ public class KmeansNaiveStrategy implements ClusterStrategy {
             centroids.add(cl.Centroid());
         }
         
-        //For tracing only, comment out when done
+        //TODO:For tracing only, comment out when done testing...
         System.out.format("Cluster centroids:%n------------------%n");
         centroids.forEach(centroid -> {
             System.out.format("Centroid: %s%n", Arrays.toString(centroid));
@@ -79,10 +87,9 @@ public class KmeansNaiveStrategy implements ClusterStrategy {
     }
     
     /**
-     * This method picks k unique random integers in the range [0, n], where k=number of clusters and n = number of points.
+     * This method picks k unique random integers in the range [0, n], where k=number_of_clusters and n=number_of_points.
      */
-    private void initializeCentroids() {
-        
+    private void initializeCentroids() {        
         List<Integer> seeds = new ArrayList();
         Random randGen = new Random();
         
@@ -109,12 +116,14 @@ public class KmeansNaiveStrategy implements ClusterStrategy {
     }
     
     /**
-     * Standard clustering step: 1) Assign points to existing centroids, 2) find new centroid, 3) set new centroid.
-     */
-    
+     * Standard clustering step:
+     * 1) Assign points to existing centroids
+     * 2) find new centroid
+     * 3) set new centroid.
+     */    
     private void cluster() {
-        int minIndex;
-        double minDist;
+        int minIndex;   //Index of the nearest cluster discovered.
+        double minDist; //Distance to nearest cluster discovered.
         
         //Assign each point to the nearest centroid
         for (double[] point : data) {
@@ -136,7 +145,10 @@ public class KmeansNaiveStrategy implements ClusterStrategy {
         
         //TODO:This variable tracks total SSE (sum of all cluster's SSE)
         double sseTotal = 0;
+        
+        //TODO:For tracing only, comment out when done testing...
         System.out.format("New Iteration...%n");
+        
         //Assign new centroid to each cluster
         for (Cluster cl : clusters) {
             cl.CalcCentroid();
@@ -144,11 +156,14 @@ public class KmeansNaiveStrategy implements ClusterStrategy {
             //TODO:For testing, print out SSE before clearing
             double sse = cl.SumSquareError();
             sseTotal += sse;
+            //TODO:For tracing only, comment out when done testing...
             System.out.format("Cluster SSE: %f%n", sse);
             
-            cl.ClearPoints();   //TODO: Maybe cluster should auto clear its points after finding new centroid.
+            //Clear the points associated with previous centroid.
+            cl.ClearPoints();
         }
         
+        //TODO:For tracing only, comment out when done testing...
         System.out.format("%nTotal SSE: %f%n----------------------%n%n", sseTotal);
     }
 }

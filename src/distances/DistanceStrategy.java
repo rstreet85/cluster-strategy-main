@@ -18,10 +18,17 @@
 package distances;
 
 /**
- * Interface for Distance Strategies.
+ * Distance Strategy interface for distance measuring algorithms.
  *
  * @author Robert Streetman
  */
 public interface DistanceStrategy {
+    /**
+     * Standard interface to find distance between two points.
+     * 
+     * @param pointA    Endpoint A
+     * @param pointB    Endpoint B
+     * @return double   Distance between endpoint A and endpoint B.
+     */
     public double distance(double[] pointA, double[] pointB);    
 }

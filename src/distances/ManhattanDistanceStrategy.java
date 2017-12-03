@@ -18,12 +18,19 @@
 package distances;
 
 /**
- * Manhattan distance strategy.
- *
+ * Strategy for <a href="https://en.wikipedia.org/wiki/Taxicab_geometry">Manhattan Distance</a>.
+ * 
  * @author Robert Streetman
  */
 public class ManhattanDistanceStrategy implements DistanceStrategy {
     
+    /**
+     * This method calculates the Manhattan (city block) distance between two points of equal dimensionality.
+     * 
+     * @param pointA    Endpoint A
+     * @param pointB    Endpoint B
+     * @return double   Manhattan distance between endpoint A and endpoint B.
+     */
     @Override
     public double distance(double[] pointA, double[] pointB) {
         double sumDiff = 0;
@@ -33,6 +40,5 @@ public class ManhattanDistanceStrategy implements DistanceStrategy {
         }
         
         return sumDiff;
-    }
-    
+    }    
 }

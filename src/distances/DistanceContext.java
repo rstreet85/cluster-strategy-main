@@ -18,17 +18,29 @@
 package distances;
 
 /**
- * Distance context for choosing different strategies.
+ * Context for accessing distance algorithms with a DistanceStrategy.
  *
  * @author Robert Streetman
  */
 public class DistanceContext {
     private DistanceStrategy strategy;
     
+    /**
+     * Method to set distance measure strategy to use.
+     * 
+     * @param strat The desired distance measure strategy.
+     */
     public void setDistanceStrategy(DistanceStrategy strat) {
         strategy = strat;
     }
     
+    /**
+     * Method to find distance between two points with previously-specified strategy.
+     * 
+     * @param pointA    Endpoint A
+     * @param pointB    Endpoint B
+     * @return double   Distance between endpoint A and endpoint B.
+     */
     public double getDistance(double[] pointA, double[] pointB) {
         return strategy.distance(pointA, pointB);
     }

@@ -20,18 +20,29 @@ package cluster;
 import java.util.List;
 
 /**
- * Context for manipulating ClusterStrategy.
+ * Context for accessing clustering algorithms with a PartitionalClusterStrategy.
  *
  * @author Robert Streetman
  */
-public class ClusterContext {
-    private ClusterStrategy strategy;
+public class PartitionalClusteringContext {
+    private PartitionalClusterStrategy strategy;
     
-    public void setClusterStrategy(ClusterStrategy cStrat) {
+    /**
+     * Method to set partitional clustering strategy to use.
+     * 
+     * @param cStrat The desired clustering strategy.
+     */
+    public void setClusterStrategy(PartitionalClusterStrategy cStrat) {
         strategy = cStrat;
     }
     
-    //The output of all clustering algorithms will be only the final centroids.
+    /**
+     * Method to find centroids with previously-specified strategy.
+     * 
+     * @param data      Array of numeric data to be clustered.
+     * @param clusters  Number of labels in data set.
+     * @return List<double[]> List of centroids after clustering.
+     */
     public List<double[]> findCentroids(double[][] data, int clusters) {
         return strategy.findCentroids(data, clusters);
     }
