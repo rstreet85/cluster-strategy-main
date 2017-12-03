@@ -39,7 +39,6 @@ public class Main {
      * @param args The command line arguments; No arguments required.
      */
     public static void main(String[] args) {
-        //This method of reading a file is old, needs to be updated. 
         double[][] rawData = DataFileReader.ReadCSVFile(new File(TEST_FILE));
         
         //Demonstrates use of naive k-means strategy pattern
