@@ -41,7 +41,7 @@ public class PartitionalClusteringContext {
      * 
      * @param data      Array of numeric data to be clustered.
      * @param clusters  Number of labels in data set.
-     * @return List<double[]> List of centroids after clustering.
+     * @return List     List of centroids after clustering.
      */
     public List<double[]> findCentroids(double[][] data, int clusters) {
         return strategy.findCentroids(data, clusters);

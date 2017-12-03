@@ -42,7 +42,7 @@ public class KmeansNaiveStrategy implements PartitionalClusterStrategy {
     /**
      * @param data          Array of numeric data to be clustered.
      * @param n_clusters    Number of labels in data set.
-     * @return List<double[]> List of centroids after clustering
+     * @return List         List of centroids after clustering
      */
     //TODO: Allow users to pass in desired number of iterations, though 5-7 are usually sufficient...
     //TODO: Allow users to pass in desired distance strategy. Using Euclidean for now.
