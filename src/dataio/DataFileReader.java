@@ -38,16 +38,11 @@ public class DataFileReader {
      * @param dataFile, CSV file containing only numeric data to be clustered.
      * @return Array of values expressed as double values.
      */
-    //TODO: Use try-with resources on the file reader.
     public static double[][] ReadCSVFile(File dataFile) {
         double[][] data = null;                 //Code calling this method should check for null, signifying error.
-        FileReader reader = null;
-        CSVParser parser = null;
-        CSVFormat format = CSVFormat.DEFAULT;
         
-        try {
-            reader = new FileReader(dataFile);
-            parser = new CSVParser(reader, format);            
+        try (FileReader reader = new FileReader(dataFile)) {
+            CSVParser parser = new CSVParser(reader, CSVFormat.DEFAULT);            
             List records = parser.getRecords();
             
             //Read first record to find number of dimensions.
@@ -66,22 +61,6 @@ public class DataFileReader {
             }
         } catch (IOException ex) {
             System.out.format("Error reading data file: %s...%n", ex.getMessage());
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException ex) {
-                    System.out.format("Error closing data file reader: %s...%n", ex.getMessage());
-                }
-            }
-            
-            if (parser != null) {
-                try {
-                    parser.close();
-                } catch (IOException ex) {
-                    System.out.format("Error closing CSV parser: %s...%n", ex.getMessage());
-                }
-            }
         }
         
         return data;
