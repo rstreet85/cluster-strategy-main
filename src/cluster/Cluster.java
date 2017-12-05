@@ -17,8 +17,6 @@
  */
 package cluster;
 
-import java.util.ArrayList;
-//Imports used only for internally calculating SSE
 import distances.*;
 
 /**
@@ -29,13 +27,12 @@ import distances.*;
 public class Cluster {
     private final int dimensions;           //Number of dimensions in each data point.
     
-    //private ArrayList<double[]> points;     //Temporary list of data points associated with this centroid.
     private double[] points;                //Temporary list of data points associated with this centroid.
     private double[] centroid;              //Coordinates of this cluster's centroid.
     private double error;
     private int numPoints;
-    //Variables used only for internally calculating SSE
-    private DistanceContext distContext;    //Used to interact with Distance Strategy pattern.
+    //TODO: Allow user to pass distance strategy, instead of hard-coding Euclidean
+    private final DistanceContext distContext;    //Used to interact with Distance Strategy pattern.
     
     /**
      * Method to instantiate the Cluster object.
@@ -45,11 +42,11 @@ public class Cluster {
     public Cluster(double[] c) {
         dimensions = c.length;
         centroid = c;
-        //points = new ArrayList<>();
         points = new double[dimensions];
         error = 0.;
         numPoints = 0;
         
+        //TODO: Read from params
         distContext = new DistanceContext();
         distContext.setDistanceStrategy(new EuclideanDistanceStrategy());
     }
@@ -78,7 +75,6 @@ public class Cluster {
      * @param point Array of point coordinates expressed as double[].
      */
     public void Insert(double[] point) {
-        //points.add(point);
         if (point.length == dimensions) {
             numPoints++;
             error += distContext.getDistance(point, centroid);
@@ -96,16 +92,6 @@ public class Cluster {
      * @return double The sum of the squared distance from each point to the centroid.
      */
     public double SumSquareError() {
-        /*
-        double sse = 0.;
-        
-        for (double[] point : points) {
-            double dist = distContext.getDistance(point, centroid);
-            sse += dist * dist;
-        }
-        
-        return sse;
-        */
         return error;
     }
     
@@ -113,7 +99,6 @@ public class Cluster {
      * Clears points associated with this centroid before each iteration.
      */
     public void ClearPoints() {
-        //points = new ArrayList();
         points = new double[dimensions];
         error = 0.;
         numPoints = 0;
@@ -124,22 +109,7 @@ public class Cluster {
      */
     public void CalcCentroid() {
         centroid = new double[dimensions];
-        /*
-        double[] sum = new double[dimensions];
-        int n = 0;  //Keep track of number of points currently in the cluster, this changes every iteration.
         
-        for (double[] point : points) {
-            for (int d = 0; d < dimensions; d++) {
-                sum[d] += point[d];
-            }
-            
-            n++;
-        }
-        
-        for (int d = 0; d < dimensions; d++) {
-            centroid[d] = sum[d] / (double) n;
-        }
-        */
         for (int i = 0; i < dimensions; i++) {
             centroid[i] = points[i] / numPoints;
         }
