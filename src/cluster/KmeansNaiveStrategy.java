@@ -17,11 +17,13 @@
  */
 package cluster;
 
+import distances.DistanceContext;
+import distances.EuclideanDistanceStrategy;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import distances.*;
+//import distances.*;
 
 /**
  * Strategy for naive <a href="https://en.wikipedia.org/wiki/K-means_clustering">k-means clustering</a>.

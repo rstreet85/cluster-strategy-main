@@ -17,7 +17,8 @@
  */
 package cluster;
 
-import distances.*;
+import distances.DistanceContext;
+import distances.EuclideanDistanceStrategy;
 
 /**
  * Class to represent a single partitional data cluster object and its methods.

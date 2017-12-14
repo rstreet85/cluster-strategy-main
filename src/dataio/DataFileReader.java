@@ -59,6 +59,8 @@ public class DataFileReader {
                     data[i][j] = Double.parseDouble(thisRecord.get(j)); //Assuming all data is numeric
                 }
             }
+            
+            //TODO: Validate data read for equal dimensionality.
         } catch (IOException ex) {
             System.out.format("Error reading data file: %s...%n", ex.getMessage());
         }
@@ -77,4 +79,9 @@ public class DataFileReader {
         //To-Do
         return data;
     }
+    
+    /**
+     * 
+     */
+    //TODO
 }
