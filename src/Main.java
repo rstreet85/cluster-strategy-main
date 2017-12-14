@@ -21,6 +21,8 @@ import dataio.DataFileReader;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * This program demonstrates the use of a Strategy design pattern to perform data clustering on numeric data.
@@ -28,6 +30,7 @@ import java.util.List;
  * @author Robert Streetman
  */
 public class Main {
+    private static final Logger MAIN_LOGGER = Logger.getLogger(Main.class.getName());
     /*
         Clustering parameters for the data file included with this example. The file bezdek_iris contains
         3 labelled classes.
@@ -47,11 +50,15 @@ public class Main {
         List<double[]> centroids = cContext.findCentroids(rawData, NUM_CLUSTERS);
         
         //Print output from naive k-means clustering
-        System.out.format("%n%nMain.java: Cluster Centroids...%n-------------------------------%n");
+        //System.out.format("%n%nMain.java: Cluster Centroids...%n-------------------------------%n");
+        MAIN_LOGGER.log(Level.INFO, String.format("Main.java: Cluster Centroids...%n-------------------------------"));
+        
         centroids.forEach(centroid -> {
-            System.out.format("Centroid: %s%n", Arrays.toString(centroid));
+            //System.out.format("Centroid: %s%n", Arrays.toString(centroid));
+            MAIN_LOGGER.log(Level.INFO, String.format("Centroid: %s", Arrays.toString(centroid)));
         });
-        System.out.format("%n%n");
+        
+        //System.out.format("%n%n");
     }
     
 }

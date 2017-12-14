@@ -21,6 +21,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -31,6 +33,7 @@ import org.apache.commons.csv.CSVRecord;
  * @author Robert Streetman
  */
 public class DataFileReader {
+    private static final Logger DATA_FILE_LOGGER = Logger.getLogger(DataFileReader.class.getName());
     
     /**
      * This method accepts a CSV file, no headers, and returns an array of values expressed as double.
@@ -62,7 +65,8 @@ public class DataFileReader {
             
             //TODO: Validate data read for equal dimensionality.
         } catch (IOException ex) {
-            System.out.format("Error reading data file: %s...%n", ex.getMessage());
+            //System.out.format("Error reading data file: %s...%n", ex.getMessage());
+            DATA_FILE_LOGGER.log(Level.SEVERE, ex.getMessage());
         }
         
         return data;

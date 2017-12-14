@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 //import distances.*;
 
 /**
@@ -33,6 +35,7 @@ import java.util.Random;
  * @author Robert Streetman
  */
 public class KmeansNaiveStrategy implements PartitionalClusterStrategy {
+    private static final Logger KMEANS_LOGGER = Logger.getLogger(KmeansNaiveStrategy.class.getName());
     private final int DEF_ITERATIONS = 10;  //It's rare that reaching a local minimum takes more than 5-10 iterations.
     
     private DistanceContext distContext;    //Access distance measures with Startegy patterns
@@ -51,7 +54,8 @@ public class KmeansNaiveStrategy implements PartitionalClusterStrategy {
     @Override
     public List<double[]> findCentroids(double[][] data, int n_clusters) {
         //TODO:For tracing only, comment out when done testing...
-        System.out.format("%nBeginning k-means clustering...%n");
+        //System.out.format("%nBeginning k-means clustering...%n");
+        KMEANS_LOGGER.log(Level.INFO, String.format("Beginning k-means clustering..."));
         
         this.data = data;
         this.numClusters = n_clusters;
@@ -59,7 +63,9 @@ public class KmeansNaiveStrategy implements PartitionalClusterStrategy {
         clusters = new Cluster[numClusters];
         
         //TODO:For tracing only, comment out when done testing...
-        System.out.format("Number of clusters: %d, number of data points: %d...%n%n", numClusters, data.length);
+        //System.out.format("Number of clusters: %d, number of data points: %d...%n%n", numClusters, data.length);
+        KMEANS_LOGGER.log(Level.INFO, String.format("Number of clusters: %d, number of data points: %d...",
+                numClusters, data.length));
         
         //Initialize DistanceContext.
         //TODO: allow user to pass selected distance strategy
@@ -80,9 +86,12 @@ public class KmeansNaiveStrategy implements PartitionalClusterStrategy {
         }
         
         //TODO:For tracing only, comment out when done testing...
-        System.out.format("Cluster centroids:%n------------------%n");
+        //System.out.format("Cluster centroids:%n------------------%n");
+        KMEANS_LOGGER.log(Level.INFO, String.format("Cluster centroids:%n------------------"));
+        
         centroids.forEach(centroid -> {
-            System.out.format("Centroid: %s%n", Arrays.toString(centroid));
+            //System.out.format("Centroid: %s%n", Arrays.toString(centroid));
+            KMEANS_LOGGER.log(Level.INFO, String.format("Centroid: %s", Arrays.toString(centroid)));
         });
         
         return centroids;
@@ -149,7 +158,8 @@ public class KmeansNaiveStrategy implements PartitionalClusterStrategy {
         double sseTotal = 0;
         
         //TODO:For tracing only, comment out when done testing...
-        System.out.format("New Iteration...%n");
+        //System.out.format("New Iteration...%n");
+        KMEANS_LOGGER.log(Level.INFO, String.format("New Iteration..."));
         
         //Assign new centroid to each cluster
         for (Cluster cl : clusters) {
@@ -159,13 +169,15 @@ public class KmeansNaiveStrategy implements PartitionalClusterStrategy {
             double sse = cl.SumSquareError();
             sseTotal += sse;
             //TODO:For tracing only, comment out when done testing...
-            System.out.format("Cluster SSE: %f%n", sse);
+            //System.out.format("Cluster SSE: %f", sse);
+            KMEANS_LOGGER.log(Level.INFO, String.format("Cluster SSE: %f", sse));
             
             //Clear the points associated with previous centroid.
             cl.ClearPoints();
         }
         
         //TODO:For tracing only, comment out when done testing...
-        System.out.format("%nTotal SSE: %f%n----------------------%n%n", sseTotal);
+        //System.out.format("%nTotal SSE: %f%n----------------------%n%n", sseTotal);
+        KMEANS_LOGGER.log(Level.INFO, String.format("Total SSE: %f%n----------------------", sseTotal));
     }
 }
